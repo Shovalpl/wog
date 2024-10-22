@@ -1,7 +1,6 @@
 from memory_game import play as play_memory_game
 from guess_game import play as play_guess_game
 from currency_roulette_game import play as play_currency_roulette_game
-from utils import SCORES_FILE_NAME, BAD_RETURN_CODE, screen_cleaner
 from score import add_score
 
 user = input('Enter your name: ')
@@ -58,10 +57,4 @@ def start_play():
             else:
                 print("Sorry, you lost the game. Better luck next time!")
 
-
-print(f"Score file name: {SCORES_FILE_NAME}")
-print(f"Bad return code: {BAD_RETURN_CODE}")
-
-# Clear the screen before starting a new game
-screen_cleaner()
 
