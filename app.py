@@ -1,7 +1,8 @@
 from memory_game import play as play_memory_game
 from guess_game import play as play_guess_game
 from currency_roulette_game import play as play_currency_roulette_game
-
+from utils import SCORES_FILE_NAME, BAD_RETURN_CODE, screen_cleaner
+from score import add_score
 
 user = input('Enter your name: ')
 
@@ -39,11 +40,28 @@ def start_play():
             print('Error! That is not the correct number. Please try again.')
             difficulty_choice = input('Enter the number of the difficulty you want to play: ')
 
-    # Call the appropriate game function based on the user's choice
-    if game_choice == '1':
-        play_memory_game(difficulty)
-    elif game_choice == '2':
-        play_guess_game(difficulty)
-    elif game_choice == '3':
-        play_currency_roulette_game(difficulty)
+            # Dictionary to map game choices to their respective play functions
+            game_functions = {
+                '1': play_memory_game,
+                '2': play_guess_game,
+                '3': play_currency_roulette_game
+            }
+
+            # Fetch and execute the appropriate game function
+            selected_game = game_functions[game_choice]
+            game_result = selected_game(difficulty_choice)
+
+            # If the user won, add the score
+            if game_result:
+                add_score(difficulty_choice)
+                print("Congratulations! You've won the game!")
+            else:
+                print("Sorry, you lost the game. Better luck next time!")
+
+
+print(f"Score file name: {SCORES_FILE_NAME}")
+print(f"Bad return code: {BAD_RETURN_CODE}")
+
+# Clear the screen before starting a new game
+screen_cleaner()
 
