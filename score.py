@@ -1,6 +1,6 @@
-from utils import BAD_RETURN_CODE
 
 SCORES_FILE_NAME = "Scores.txt"
+BAD_RETURN_CODE = -1
 
 
 def calculate_points(difficulty):
