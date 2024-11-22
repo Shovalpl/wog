@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    image: shoval/wog:latest
+    container_name: WorldOfGame
+    ports:
+      - "8777:8777"
+    environment:
+      FLASK_APP: main_score.py
+      FLASK_RUN_HOST: 0.0.0.0
+      FLASK_RUN_PORT: 8777
+      FLASK_ENV: development
+    volumes:
+      - ./scores.txt:/scores.txt
+    restart: unless-stopped
+    command: flask run --host=0.0.0.0 --port=8777
+
+networks:
+  default:
+    driver: bridge

@@ -57,4 +57,16 @@ def start_play():
     else:
         print("Sorry, you lost the game. Better luck next time!")
 
+    play_again()
+
+
+# Ask if the user wants to play another game
+def play_again():
+    while True:
+        choice = input("Would you like to play another game? (yes/no): ").lower()
+        if choice in ['yes']:
+            start_play()
+        if choice != ['yes']:
+            print("Thank you for playing! Goodbye!")
+            break  # Exit the loop if the user doesn't want to play again
 
