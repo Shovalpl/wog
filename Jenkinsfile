@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     echo 'Installing dependencies...'
-                    bat 'pip install -r requirements.txt'
+                    sh 'pip install -r requirements.txt'
                 }
             }
         }
