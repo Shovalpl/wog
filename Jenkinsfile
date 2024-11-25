@@ -27,6 +27,7 @@ pipeline {
             steps {
                 echo 'Building Docker image...'
                 sh """
+                    /usr/local/bin/docker system prune -f  // Clear unused Docker resources
                     /usr/local/bin/docker pull python:3.12-slim
                     /usr/local/bin/docker build -t shoval/wog:latest .
                 """
