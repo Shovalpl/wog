@@ -29,7 +29,7 @@ pipeline {
                 sh """
                     /usr/local/bin/docker system prune -f
                     /usr/local/bin/docker pull python:3.12-slim
-                    /usr/local/bin/docker build -t $(DOCKER_IMAGE):$(DOCKER_TAG) .
+                    /usr/local/bin/docker build -t DOCKER_IMAGE:DOCKER_TAG .
                 """
             }
         }
