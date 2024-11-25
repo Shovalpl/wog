@@ -40,7 +40,7 @@ pipeline {
                 echo 'Running the Dockerized application...'
                 sh '''
                 /usr/local/bin/docker run -d --name test_container -p 8777:5000 \
-                -v $(WORKSPACE)/Scores.txt:/app/Scores.txt \
+                -v /Users/wrlmyswnhppl/Documents/GitHub/wog/Scores.txt:/app/Scores.txt \
                 ${DOCKER_IMAGE}:${DOCKER_TAG}
                 '''
             }
