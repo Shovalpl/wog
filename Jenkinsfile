@@ -27,8 +27,8 @@ pipeline {
             steps {
                 echo 'Building Docker image...'
                 sh """
-                    docker pull python:3.9-slim
-                    docker build -t shoval/wog:latest .
+                    /usr/local/bin/docker pull python:3.9-slim
+                    /usr/local/bin/docker build -t shoval/wog:latest .
                 """
             }
         }
