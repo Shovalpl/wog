@@ -5,7 +5,6 @@ pipeline {
         DOCKER_IMAGE = 'shoval/wog'
         DOCKER_TAG = 'latest'
         DOCKER_CREDENTIALS = credentials('dockerhub_credentials')
-        WORKSPACE = /Users/wrlmyswnhppl/Documents/GitHub/wog
     }
 
     stages {
