@@ -45,7 +45,7 @@ pipeline {
             steps {
                 script {
                     echo 'Running Selenium tests...'
-                    bat 'python Tests/e2e.py'
+                    bat 'python3 Tests/e2e.py'
                 }
             }
         }
