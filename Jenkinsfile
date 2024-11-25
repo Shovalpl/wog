@@ -26,7 +26,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building Docker image...'
-                sh 'docker build -t shoval/wog:latest .'
+                sh '/usr/local/bin/docker build -t shoval/wog:latest .'
             }
         }
 
