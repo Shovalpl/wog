@@ -26,7 +26,10 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building Docker image...'
-                sh '/usr/local/bin/docker build -t shoval/wog:latest .'
+                sh """
+                    docker pull python:3.9-slim
+                    docker build -t shoval/wog:latest .
+                """
             }
         }
 
