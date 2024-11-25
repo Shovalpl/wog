@@ -27,7 +27,7 @@ pipeline {
             steps {
                 echo 'Building Docker image...'
                 script {
-                    docker build -t ("{DOCKER_IMAGE}:{DOCKER_TAG}")
+                    docker build -t ("shoval/wog:latest")
                 }
             }
         }
