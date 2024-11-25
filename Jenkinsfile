@@ -77,11 +77,9 @@ pipeline {
         always {
             echo 'Cleaning up...'
             sh '''
-            /usr/local/bin/docker stop test_container || true
-            /usr/local/bin/docker rm test_container || true
             /usr/local/bin/docker rmi ${DOCKER_IMAGE}:${DOCKER_TAG} || true
             /usr/local/bin/docker system prune -f
             '''
         }
     }
-}    
+}
