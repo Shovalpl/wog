@@ -29,7 +29,7 @@ pipeline {
                 sh """
                     /usr/local/bin/docker system prune -f
                     /usr/local/bin/docker pull python:3.12-slim
-                    /usr/local/bin/docker build -t shoval/wog:latest .
+                    /usr/local/bin/docker build -t $(DOCKER_IMAGE):$(DOCKER_TAG) .
                 """
             }
         }
@@ -38,7 +38,7 @@ pipeline {
             steps {
                 echo 'Running the Dockerized application...'
                 sh '''
-                docker run -d --name test_container -p 8777:5000 \
+                /usr/local/bin/docker run -d --name test_container -p 8777:5000 \
                 -v $(WORKSPACE)/scores.txt:/Scores.txt \
                 $DOCKER_IMAGE:$DOCKER_TAG
                 '''
@@ -49,7 +49,7 @@ pipeline {
             steps {
                 script {
                     echo 'Running Selenium tests...'
-                    bat 'python3 Tests/e2e.py'
+                    sh 'python3 Tests/e2e.py'
                 }
             }
         }
@@ -60,10 +60,10 @@ pipeline {
             steps {
                 echo 'Finalizing: Cleaning up and pushing to DockerHub...'
                 sh '''
-                docker stop test_container || true
-                docker rm test_container || true
-                docker login -u your_dockerhub_username -p your_dockerhub_password
-                docker push $DOCKER_IMAGE:$DOCKER_TAG
+                /usr/local/bin/docker stop test_container || true
+                /usr/local/bin/docker rm test_container || true
+                /usr/local/bin/docker login -u shovalpl -p auckppk1!
+                /usr/local/bin/docker push $DOCKER_IMAGE:$DOCKER_TAG
                 '''
             }
         }
@@ -76,9 +76,9 @@ pipeline {
         always {
             echo 'Cleaning up...'
             sh '''
-            docker stop test_container || true
-            docker rm test_container || true
-            docker rmi $DOCKER_IMAGE:$DOCKER_TAG || true
+            /usr/local/bin/docker stop test_container || true
+            /usr/local/bin/docker rm test_container || true
+            /usr/local/bin/docker rmi $DOCKER_IMAGE:$DOCKER_TAG || true
             '''
         }
         failure {
