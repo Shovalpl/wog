@@ -29,7 +29,7 @@ pipeline {
                 sh """
                     /usr/local/bin/docker system prune -f
                     /usr/local/bin/docker pull python:3.12-slim
-                    /usr/local/bin/docker build -t DOCKER_IMAGE:DOCKER_TAG .
+                    /usr/local/bin/docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .
                 """
             }
         }
@@ -40,7 +40,7 @@ pipeline {
                 sh '''
                 /usr/local/bin/docker run -d --name test_container -p 8777:5000 \
                 -v $(WORKSPACE)/scores.txt:/Scores.txt \
-                $DOCKER_IMAGE:$DOCKER_TAG
+                ${DOCKER_IMAGE}:${DOCKER_TAG}
                 '''
             }
         }
@@ -63,7 +63,7 @@ pipeline {
                 /usr/local/bin/docker stop test_container || true
                 /usr/local/bin/docker rm test_container || true
                 /usr/local/bin/docker login -u shovalpl -p auckppk1!
-                /usr/local/bin/docker push $DOCKER_IMAGE:$DOCKER_TAG
+                /usr/local/bin/docker push ${DOCKER_IMAGE}:${DOCKER_TAG}
                 '''
             }
         }
@@ -78,7 +78,7 @@ pipeline {
             sh '''
             /usr/local/bin/docker stop test_container || true
             /usr/local/bin/docker rm test_container || true
-            /usr/local/bin/docker rmi $DOCKER_IMAGE:$DOCKER_TAG || true
+            /usr/local/bin/docker rmi ${DOCKER_IMAGE}:${DOCKER_TAG} || true
             '''
         }
         failure {
