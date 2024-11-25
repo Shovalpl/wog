@@ -39,7 +39,7 @@ pipeline {
                 echo 'Running the Dockerized application...'
                 sh '''
                 /usr/local/bin/docker run -d --name test_container -p 8777:5000 \
-                -v $(WORKSPACE)/scores.txt:/Scores.txt \
+                -v $(WORKSPACE)/Scores.txt:/Scores.txt \
                 ${DOCKER_IMAGE}:${DOCKER_TAG}
                 '''
             }
