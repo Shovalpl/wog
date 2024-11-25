@@ -56,8 +56,6 @@ pipeline {
         }
 
        stage('Finalize') {
-    steps {
-        script {
             steps {
                 echo 'Finalizing: Cleaning up and pushing to DockerHub...'
                 sh '''
@@ -65,21 +63,10 @@ pipeline {
                 /usr/local/bin/docker rm test_container || true
                 /usr/local/bin/docker login -u ${DOCKER_CREDENTIALS_USR} -p ${DOCKER_CREDENTIALS_PSW}
                 /usr/local/bin/docker push ${DOCKER_IMAGE}:${DOCKER_TAG}
+                /usr/local/bin/docker rmi ${DOCKER_IMAGE}:${DOCKER_TAG} || true
+                /usr/local/bin/docker system prune -f
                 '''
             }
-        }
-    }
-}
-
-    }
-
-    post {
-        always {
-            echo 'Cleaning up...'
-            sh '''
-            /usr/local/bin/docker rmi ${DOCKER_IMAGE}:${DOCKER_TAG} || true
-            /usr/local/bin/docker system prune -f
-            '''
-        }
+       }
     }
 }
