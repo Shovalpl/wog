@@ -62,10 +62,14 @@ pipeline {
                 /usr/local/bin/docker rm test_container || true
                 '''
 
-                echo 'Pushing Docker image to DockerHub...'
-                sh "/usr/local/bin/docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
-                sh "/usr/local/bin/docker system prune -f"
-                
+                withCredentials([usernamePassword(credentialsId: 'dockerhub_credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    echo 'Logging in to Docker Hub...'
+                    sh "/usr/local/bin/docker login -u %DOCKER_USER% -p %DOCKER_PASS%"
+
+                    echo 'Pushing Docker image to DockerHub...'
+                    sh "/usr/local/bin/docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
+                    sh "/usr/local/bin/docker system prune -f"
+                }
             }
 
             post {
