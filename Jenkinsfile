@@ -59,13 +59,34 @@ pipeline {
             steps {
                 echo 'Finalizing: Cleaning up and pushing to DockerHub...'
                 sh '''
-                /usr/local/bin/docker stop test_container || true
-                /usr/local/bin/docker rm test_container || true
-                /usr/local/bin/docker login -u shovalpl -p auckppk1!
+                /usr/local/bin/docker stop test_container
+                /usr/local/bin/docker rm test_container
+                '''
+                withCredentials([usernamePassword(credentialsId: 'dockerhub_credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                echo 'Logging in to Docker Hub...'
+                sh '/usr/local/bin/docker login -u %DOCKER_USER% -p %DOCKER_PASS%'
+
+                echo 'Pushing Docker image to DockerHub...'
+                sh '''
                 /usr/local/bin/docker push ${DOCKER_IMAGE}:${DOCKER_TAG}
-                /usr/local/bin/docker rmi ${DOCKER_IMAGE}:${DOCKER_TAG} || true
+                /usr/local/bin/docker rmi ${DOCKER_IMAGE}:${DOCKER_TAG}
                 /usr/local/bin/docker system prune -f
                 '''
+            }
+
+            post {
+                always {
+                    // Logout from DockerHub
+                    sh 'docker logout'
+                }
+
+                success {
+                    echo "Image successfully pushed to DockerHub"
+                }
+
+                failure {
+                    echo "Failed to finalize Docker image push"
+                }
             }
        }
     }
