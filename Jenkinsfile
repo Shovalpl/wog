@@ -62,7 +62,7 @@ pipeline {
                 /usr/local/bin/docker rm test_container || true
                 '''
 
-                withCredentials([usernamePassword(credentialsId: 'dockerhub_credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub_credentials', usernameVariable: 'shovalpl', passwordVariable: 'auckppk1!')]) {
                     echo 'Logging in to Docker Hub...'
                     sh "/usr/local/bin/docker login -u %DOCKER_USER% -p %DOCKER_PASS%"
 
