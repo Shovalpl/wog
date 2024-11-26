@@ -61,7 +61,7 @@ pipeline {
                 sh '''
                 /usr/local/bin/docker stop test_container || true
                 /usr/local/bin/docker rm test_container || true
-                echo ${DOCKER_CREDENTIALS_PSW} | /usr/local/bin/docker login -u ${DOCKER_CREDENTIALS_USR} --password-stdin
+                /usr/local/bin/docker login -u shovalpl -p auckppk1!
                 /usr/local/bin/docker push ${DOCKER_IMAGE}:${DOCKER_TAG}
                 /usr/local/bin/docker rmi ${DOCKER_IMAGE}:${DOCKER_TAG} || true
                 /usr/local/bin/docker system prune -f
