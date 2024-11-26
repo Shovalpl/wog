@@ -77,7 +77,7 @@ pipeline {
             post {
                 always {
                     // Logout from DockerHub
-                    sh 'docker logout'
+                    sh '/usr/local/bin/docker logout'
                 }
 
                 success {
