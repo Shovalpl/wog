@@ -4,7 +4,6 @@ pipeline {
     environment {
         DOCKER_IMAGE = 'shoval/wog'
         DOCKER_TAG = 'latest'
-        DOCKER_CREDENTIALS = credentials('dockerhub_credentials')
     }
 
     stages {
@@ -66,10 +65,9 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub_credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     echo 'Logging in to Docker Hub...'
                     sh "/usr/local/bin/docker login -u $DOCKER_USER -p $DOCKER_PASS"
-                
+
                     echo 'Pushing Docker image to DockerHub...'
                     sh "/usr/local/bin/docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
-                    sh "/usr/local/bin/docker rmi ${DOCKER_IMAGE}:${DOCKER_TAG}"
                     sh "/usr/local/bin/docker system prune -f"
                 }
             }
